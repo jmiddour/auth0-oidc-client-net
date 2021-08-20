@@ -1,27 +1,44 @@
+﻿using Auth0.OidcClient;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Windows;
-using Auth0.OidcClient;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 
-namespace WpfTestApp
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace WinUI3
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class MainWindow : Window
     {
         private readonly Auth0Client _auth0Client;
-        private readonly Action<string> writeLine;
+        private Action<string> writeLine;
         private Action clearText;
         private string accessToken;
 
         public MainWindow()
         {
             InitializeComponent();
-            writeLine = (text) => outputText.Text += text + "\n";
-            clearText = () => outputText.Text = "";
+            writeLine = (s) => resultTextBox.Text += s + "\r\n";
+            clearText = () => resultTextBox.Text = "";
 
-            _auth0Client = new Auth0Client(new Auth0ClientOptions
+            _auth0Client = new Auth0Client(this,new Auth0ClientOptions
             {
-                Domain = "auth0-dotnet-integration-tests.auth0.com",
-                ClientId = "qmss9A66stPWTOXjR6X1OeA0DLadoNP2",
-                
+                Domain = "dev-y2ut50hc.us.auth0.com",
+                ClientId = "x0SSwol0EBHFFYDfP5KkwRIobOBDFlcB"
             });
         }
 
@@ -30,7 +47,7 @@ namespace WpfTestApp
             clearText();
             writeLine("Starting login...");
 
-            var loginResult = await _auth0Client.LoginAsync( new { organization = "" });
+            var loginResult = await _auth0Client.LoginAsync();
 
             if (loginResult.IsError)
             {
