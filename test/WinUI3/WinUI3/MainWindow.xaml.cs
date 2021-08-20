@@ -37,8 +37,8 @@ namespace WinUI3
 
             _auth0Client = new Auth0Client(this,new Auth0ClientOptions
             {
-                Domain = "dev-y2ut50hc.us.auth0.com",
-                ClientId = "x0SSwol0EBHFFYDfP5KkwRIobOBDFlcB"
+                Domain = "auth0-dotnet-integration-tests.auth0.com",
+                ClientId = "qmss9A66stPWTOXjR6X1OeA0DLadoNP2"
             });
         }
 
